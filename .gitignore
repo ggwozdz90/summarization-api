@@ -169,3 +169,7 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+
+# Project related artifacts
+downloaded_summarization_models/
+volume/

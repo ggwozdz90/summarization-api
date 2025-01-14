@@ -5,7 +5,11 @@ description = "A FastAPI project integrating summarization services."
 authors = [{ name = "Grzegorz Gwóźdź" }]
 requires-python = ">=3.12,<3.13"
 readme = "docs/README.md"
-dependencies = ["python-dotenv>=1.0.1", "fastapi[all]>=0.115.6"]
+dependencies = [
+    "python-dotenv>=1.0.1",
+    "fastapi[all]>=0.115.6",
+    "transformers>=4.47.1",
+]
 
 [project.urls]
 homepage = "https://github.com/ggwozdz90/summarization-api"
@@ -16,6 +20,11 @@ documentation = "https://github.com/ggwozdz90/summarization-api/blob/develop/doc
 [project.scripts]
 start = "src.main:main"
 
+[project.optional-dependencies]
+cpu = ["torch (==2.5.1+cpu)"]
+cuda124 = ["torch (==2.5.1+cu124)"]
+rocm62 = ["torch (==2.5.1+rocm6.2)", "pytorch-triton-rocm (==3.1.0)"]
+
 [build-system]
 requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"
@@ -23,6 +32,16 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 requires-poetry = ">=2.0"
 packages = [{ include = "*", from = "src" }]
+
+[tool.poetry.dependencies]
+torch = [
+    { markers = "extra == 'cpu' and extra != 'cuda124' and extra != 'rocm62'", source = "pytorch-cpu" },
+    { markers = "extra == 'cuda124' and extra != 'cpu' and extra != 'rocm62'", source = "pytorch-cuda124" },
+    { markers = "extra == 'rocm62' and extra != 'cpu' and extra != 'cuda124'", source = "pytorch-rocm62" },
+]
+pytorch-triton-rocm = [
+    { version = "3.1.0", markers = "extra == 'rocm62' and extra != 'cpu' and extra != 'cuda124'", source = "pytorch-triton-rocm" },
+]
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
@@ -44,6 +63,26 @@ tryceratops = "^2.4.1"
 flake8-fastapi = "^0.7.0"
 ssort = "^0.14.0"
 codespell = "^2.3.0"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "pytorch-cuda124"
+url = "https://download.pytorch.org/whl/cu124"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "pytorch-rocm62"
+url = "https://download.pytorch.org/whl/rocm6.2"
+priority = "explicit"
+
+[[tool.poetry.source]]
+name = "pytorch-triton-rocm"
+url = "https://download.pytorch.org/whl"
+priority = "explicit"
 
 [tool.commitizen]
 name = "cz_conventional_commits"

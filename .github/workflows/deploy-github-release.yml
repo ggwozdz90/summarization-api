@@ -28,7 +28,7 @@ jobs:
       run: poetry config virtualenvs.in-project true
 
     - name: Install dependencies
-      run: poetry install
+      run: poetry install --extras cpu
     
     - name: Build
       run: poetry build
