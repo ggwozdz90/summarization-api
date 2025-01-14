@@ -1,4 +1,4 @@
-# {{{PROJECT-TITLE}}}
+# Summarization API
 
 This project is a template for FastAPI projects.
 
@@ -17,7 +17,7 @@ Available versions:
 
 ### Windows Executable
 
-Download the executable from [GitHub Releases](https://github.com/ggwozdz90/{{{PROJECT-NAME}}}/releases).
+Download the executable from [GitHub Releases](https://github.com/ggwozdz90/summarization-api/releases).
 
 ## Quick Start
 
@@ -40,7 +40,7 @@ Choose your preferred distribution:
       -e LOG_LEVEL=INFO \
       -e FASTAPI_HOST=0.0.0.0 \
       -e FASTAPI_PORT=8000 \
-      ggwozdz/{{{PROJECT-NAME}}}:latest
+      ggwozdz/summarization-api:latest
     ```
 
 ### Using Docker Compose
@@ -50,7 +50,7 @@ Choose your preferred distribution:
     ```yaml
     services:
       api:
-        image: ggwozdz/{{{PROJECT-NAME}}}:latest
+        image: ggwozdz/summarization-api:latest
         environment:
           - LOG_LEVEL=INFO
           - FASTAPI_HOST=0.0.0.0
@@ -62,7 +62,7 @@ Choose your preferred distribution:
 ### Using Windows Executable
 
 1. Download from GitHub Releases
-2. Run `{{{PROJECT-NAME}}}.exe`
+2. Run `summarization-api.exe`
 
 ## API Features
 
@@ -96,7 +96,7 @@ Developer guide is available in [docs/DEVELOPER.md](DEVELOPER.md).
 
 ## Table of Contents
 
-- [{{{PROJECT-TITLE}}}](#{{{PROJECT-NAME}}})
+- [Summarization API](#summarization-api)
   - [Features](#features)
   - [Available Distributions](#available-distributions)
     - [Docker Images](#docker-images)

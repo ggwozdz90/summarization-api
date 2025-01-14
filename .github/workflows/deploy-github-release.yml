@@ -38,9 +38,9 @@ jobs:
 
     - name: Zip EXE
       run: | 
-        cp .env dist/{{{PROJECT-NAME}}}
-        Compress-Archive -Path dist/{{{PROJECT-NAME}}} -DestinationPath dist/{{{PROJECT-NAME}}}-exe.zip
-        Remove-Item -Recurse -Force dist/{{{PROJECT-NAME}}}
+        cp .env dist/summarization-api
+        Compress-Archive -Path dist/summarization-api -DestinationPath dist/summarization-api-exe.zip
+        Remove-Item -Recurse -Force dist/summarization-api
 
     - name: Deploy GitHub Release
       uses: softprops/action-gh-release@v2

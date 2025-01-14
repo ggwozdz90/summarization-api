@@ -1,4 +1,4 @@
-# {{{PROJECT-TITLE}}} - Developer Guide
+# Summarization API - Developer Guide
 
 ## Features & Technical Highlights
 
@@ -59,8 +59,8 @@ Choose your development environment:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/ggwozdz90/{{{PROJECT-NAME}}}
-    cd {{{PROJECT-NAME}}}
+    git clone https://github.com/ggwozdz90/summarization-api
+    cd summarization-api
     ```
 
 2. Install poetry:
@@ -141,7 +141,7 @@ Choose your development environment:
 - Build Docker images:
 
     ```bash
-    docker build -t {{{PROJECT-NAME}}}:latest .
+    docker build -t summarization-api:latest .
     ```
 
 ## CI/CD Pipeline
@@ -173,7 +173,7 @@ src/
 
 ## Table of Contents
 
-- [{{{PROJECT-TITLE}}} - Developer Guide](#{{{PROJECT-NAME}}}---developer-guide)
+- [Summarization API - Developer Guide](#summarization-api---developer-guide)
   - [Features \& Technical Highlights](#features--technical-highlights)
     - [Core Capabilities](#core-capabilities)
     - [Technical Architecture](#technical-architecture)

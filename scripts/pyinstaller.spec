@@ -26,7 +26,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='{{{PROJECT-NAME}}}',
+    name='summarization-api',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -43,5 +43,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='{{{PROJECT-NAME}}}',
+    name='summarization-api',
 )

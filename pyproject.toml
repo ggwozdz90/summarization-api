@@ -1,17 +1,17 @@
 [project]
-name = "{{{PROJECT-NAME}}}"
+name = "summarization-api"
 version = "0.1.0"
-description = "{{{PROJECT-DESCRIPTION}}}"
+description = "A FastAPI project integrating summarization services."
 authors = [{ name = "Grzegorz Gwóźdź" }]
 requires-python = ">=3.12,<3.13"
 readme = "docs/README.md"
 dependencies = ["python-dotenv>=1.0.1", "fastapi[all]>=0.115.6"]
 
 [project.urls]
-homepage = "https://github.com/ggwozdz90/{{{PROJECT-NAME}}}"
-repository = "https://github.com/ggwozdz90/{{{PROJECT-NAME}}}"
-documentation = "https://github.com/ggwozdz90/{{{PROJECT-NAME}}}/blob/develop/docs/README.md"
-"Bug Tracker" = "https://github.com/ggwozdz90/{{{PROJECT-NAME}}}/issues"
+homepage = "https://github.com/ggwozdz90/summarization-api"
+repository = "https://github.com/ggwozdz90/summarization-api"
+documentation = "https://github.com/ggwozdz90/summarization-api/blob/develop/docs/README.md"
+"Bug Tracker" = "https://github.com/ggwozdz90/summarization-api/issues"
 
 [project.scripts]
 start = "src.main:main"

@@ -1,4 +1,4 @@
-# {{{PROJECT-TITLE}}}
+# Summarization API
 
 This project is a template for FastAPI projects.
 
@@ -30,7 +30,7 @@ Available versions:
       -e LOG_LEVEL=INFO \
       -e FASTAPI_HOST=0.0.0.0 \
       -e FASTAPI_PORT=8000 \
-      ggwozdz/{{{PROJECT-NAME}}}:latest
+      ggwozdz/summarization-api:latest
     ```
 
 ### Using Docker Compose
@@ -40,7 +40,7 @@ Available versions:
     ```yaml
     services:
       api:
-        image: ggwozdz/{{{PROJECT-NAME}}}:latest
+        image: ggwozdz/summarization-api:latest
         environment:
           - LOG_LEVEL=INFO
           - FASTAPI_HOST=0.0.0.0
@@ -77,4 +77,4 @@ The application uses a `.env` file or Docker Compose to define configurable envi
 
 ## Developer Guide
 
-Developer guide is available in [docs/DEVELOPER.md](https://github.com/ggwozdz90/{{{PROJECT-NAME}}}/blob/main/docs/DEVELOPER.md).
+Developer guide is available in [docs/DEVELOPER.md](https://github.com/ggwozdz90/summarization-api/blob/main/docs/DEVELOPER.md).
