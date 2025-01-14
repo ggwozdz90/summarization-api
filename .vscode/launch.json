@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "{{{PROJECT-NAME}}}",
+            "name": "summarization-api",
             "request": "launch",
             "type": "debugpy",
             "program": "src/main.py"

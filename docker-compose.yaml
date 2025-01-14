@@ -4,10 +4,16 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - POETRY_INSTALL_ARGS=
+        - POETRY_INSTALL_ARGS=--extras cpu
     environment:
       - LOG_LEVEL=INFO
+      - DEVICE=cpu
       - FASTAPI_HOST=0.0.0.0
       - FASTAPI_PORT=8000
+      - MODEL_IDLE_TIMEOUT=60
+      - SUMMARIZATION_MODEL_NAME=facebook/bart-large-cnn
+      - SUMMARIZATION_MODEL_DOWNLOAD_PATH=downloaded_summarization_models
     ports:
       - "8000:8000"
+    volumes:
+      - ./volume/downloaded_summarization_models:/app/downloaded_summarization_models

@@ -1,23 +1,27 @@
-# {{{PROJECT-TITLE}}} - Developer Guide
+# Summarization API - Developer Guide
 
 ## Features & Technical Highlights
 
 ### Core Capabilities
 
-- **Template Project**: Provides a starting point for new FastAPI projects with a focus on code quality and maintainability
+- **Summarization Model Integration**: Summarizes text using Facebook's BART large CNN summarization model
+- **Memory Optimization**: Models are loaded in separate processes and terminated after a configurable idle timeout to conserve RAM
 
 ### Technical Architecture
 
 - **Clean Architecture**: Project structure follows clean architecture principles, ensuring separation of concerns and maintainability
-- **FastAPI Implementation**: Exposes RESTful API endpoints
+- **FastAPI Implementation**: Exposes RESTful API endpoints for text summarization
 - **Comprehensive Configuration**: Uses `.env` file for flexible environment configuration
 - **Logging System**: Detailed operation logging for traceability and debugging
 - **Conventional Commits**: Follows conventional commit messages for automated versioning and changelog generation
 
 ### Deployment Options
 
-- **Docker Support**: Application runs in a Docker container for easy deployment
-- **Windows Executable**: Provides a standalone Windows executable for local use
+- **Docker Support**: Application runs in a Docker container for easy deployment:
+  - CPU version (fully tested and production-ready)
+  - CUDA version (proof-of-concept implementation)
+  - ROCm version (proof-of-concept implementation)
+- **Windows Executable**: Provides a standalone Windows executable for local use (CPU version, fully tested)
 
 ### Quality Assurance
 
@@ -54,13 +58,29 @@ Choose your development environment:
   - Poetry
   - Docker
 
+Choose your hardware acceleration:
+
+- **CPU Version** (Recommended):
+  - Thoroughly tested and validated for stability
+
+- **CUDA Version** (Proof of concept):
+  - NVIDIA GPU with CUDA support
+  - NVIDIA Container Toolkit
+  - Note: May require additional configuration and GPU support software
+  - Current implementation handles basic scenarios but needs further testing
+
+- **ROCm Version** (Proof of concept):
+  - AMD GPU with ROCm support
+  - Note: May require additional configuration and GPU support software
+  - Current implementation handles basic scenarios but needs further testing
+
 ### Environment setup
 
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/ggwozdz90/{{{PROJECT-NAME}}}
-    cd {{{PROJECT-NAME}}}
+    git clone https://github.com/ggwozdz90/summarization-api
+    cd summarization-api
     ```
 
 2. Install poetry:
@@ -84,7 +104,14 @@ Choose your development environment:
 5. Install dependencies:
 
     ```bash
-    poetry install
+    # summarization processing on CPU
+    poetry install --extras cpu
+  
+    # summarization processing on GPU  (NVIDIA CUDA 12.4)
+    poetry install --extras cuda124
+
+    # summarization processing on GPU (AMD ROCm 6.2)
+    poetry install --extras rocm62
     ```
 
 6. Start the application:
@@ -138,10 +165,19 @@ Choose your development environment:
 
 #### Docker Images
 
-- Build Docker images:
+- Build Docker images for CPU, CUDA and ROCm:
 
     ```bash
-    docker build -t {{{PROJECT-NAME}}}:latest .
+    # CPU Version - Recommended
+    docker build --build-arg POETRY_INSTALL_ARGS="--extras=cpu" -t summarization-api:cpu .
+
+    # CUDA Version - Proof of concept implementation
+    # Note: May require additional GPU support software
+    docker build --build-arg POETRY_INSTALL_ARGS="--extras=cuda124" -t summarization-api:cuda .
+
+    # ROCm Version - Proof of concept implementation
+    # Note: May require additional GPU support software
+    docker build --build-arg POETRY_INSTALL_ARGS="--extras=rocm62" -t summarization-api:rocm .
     ```
 
 ## CI/CD Pipeline
@@ -159,21 +195,36 @@ The project implements automated pipelines for:
 
 ```plaintext
 src/
-┣ api/                   # API Layer
-┃ ┣ dtos/                 # Data Transfer Objects
-┃ ┣ handlers/             # Request Handlers
-┃ ┣ middlewares/          # API Middlewares
-┃ ┣ routers/              # Route Definitions
-┃ ┗ server.py             # Server Configuration
-┣ core/                  # Core Components
-┃ ┣ config/               # Configuration Management
-┃ ┗ logger/               # Logging Setup
-┗ main.py                # Application Entry Point
+├── api/                   # API Layer
+│   ├── dtos/               # Data Transfer Objects
+│   ├── handlers/           # Request Handlers
+│   ├── middlewares/        # API Middlewares
+│   ├── routers/            # Route Definitions
+│   └── server.py           # Server Configuration
+├── application/           # Application Layer
+│   └── usecases/           # Business Logic Use Cases
+├── assets/                # Static Resources
+│   └── mappings/           # Language Mappings
+├── core/                  # Core Components
+│   ├── config/             # Configuration Management
+│   ├── logger/             # Logging Setup
+│   ├── timer/              # Timing Utilities
+│   └── cuda/               # CUDA Utilities
+├── data/                  # Data Layer
+│   ├── factories/          # Object Factories
+│   ├── repositories/       # Data Access
+│   └── workers/            # Background Workers
+├── domain/                # Domain Layer
+│   ├── exceptions/         # Custom Exceptions
+│   ├── models/             # Domain Models
+│   ├── repositories/       # Repository Interfaces
+│   └── services/           # Domain Services
+└── main.py                # Application Entry Point
 ```
 
 ## Table of Contents
 
-- [{{{PROJECT-TITLE}}} - Developer Guide](#{{{PROJECT-NAME}}}---developer-guide)
+- [Summarization API - Developer Guide](#summarization-api---developer-guide)
   - [Features \& Technical Highlights](#features--technical-highlights)
     - [Core Capabilities](#core-capabilities)
     - [Technical Architecture](#technical-architecture)

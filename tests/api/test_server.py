@@ -35,6 +35,7 @@ def test_api_server_initialization(
     assert isinstance(app, FastAPI)
     assert any(isinstance(middleware, type(api_server.app.user_middleware[0])) for middleware in app.user_middleware)
     assert any(getattr(route, "path", None) == "/healthcheck" for route in app.routes)
+    assert any(getattr(route, "path", None) == "/summarize" for route in app.routes)
 
 
 def test_api_server_start(

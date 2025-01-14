@@ -10,7 +10,7 @@ def main(
     config: AppConfig,
     server: APIServer,
 ) -> None:
-    logger.info("Starting the {{{PROJECT-NAME}}} server...")
+    logger.info("Starting the summarization-api server...")
     config.initialize(logger)
     logger.set_level(config.log_level)
     server.start()
