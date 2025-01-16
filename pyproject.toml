@@ -1,6 +1,6 @@
 [project]
 name = "summarization-api"
-version = "0.2.0"
+version = "0.3.0"
 description = "A FastAPI project integrating summarization services."
 authors = [{ name = "Grzegorz Gwóźdź" }]
 requires-python = ">=3.12,<3.13"
