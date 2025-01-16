@@ -1,6 +1,6 @@
 import threading
 import time
-from typing import Annotated, Optional
+from typing import Annotated, Any, Dict, Optional
 
 from fastapi import Depends
 
@@ -61,7 +61,8 @@ class SummarizationModelRepositoryImpl(SummarizationModelRepository):  # type: i
 
     def summarize(
         self,
-        text: str,
+        text_to_summarize: str,
+        generation_parameters: Dict[str, Any],
     ) -> str:
         with self._lock:
             if not self.worker.is_alive():
@@ -70,7 +71,10 @@ class SummarizationModelRepositoryImpl(SummarizationModelRepository):  # type: i
 
         self.logger.debug("Summarization started")
 
-        result: str = self.worker.summarize(text)
+        result: str = self.worker.summarize(
+            text_to_summarize,
+            generation_parameters,
+        )
 
         self.timer.start(
             self.config.model_idle_timeout,

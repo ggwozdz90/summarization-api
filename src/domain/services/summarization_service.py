@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any, Dict
 
 from fastapi import Depends
 
@@ -28,12 +28,16 @@ class SummarizationService:
 
     def summarize_text(
         self,
-        text: str,
+        text_to_summarize: str,
+        generation_parameters: Dict[str, Any],
     ) -> str:
         self.logger.debug("Starting summarization of text")
 
-        summarized_text: str = self.summarization_model_repository.summarize(text)
+        summary: str = self.summarization_model_repository.summarize(
+            text_to_summarize,
+            generation_parameters,
+        )
 
         self.logger.debug("Completed summarization of text")
 
-        return summarized_text
+        return summary

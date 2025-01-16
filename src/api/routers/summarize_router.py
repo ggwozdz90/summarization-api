@@ -17,6 +17,9 @@ class SummarizeRouter:
         summarize_text_usecase: Annotated[SummarizeTextUseCase, Depends()],
         summarize_dto: SummarizeDTO = Body(...),
     ) -> SummarizeResultDTO:
-        result = await summarize_text_usecase.execute(summarize_dto.text)
+        summary = await summarize_text_usecase.execute(
+            summarize_dto.text_to_summarize,
+            summarize_dto.generation_parameters,
+        )
 
-        return SummarizeResultDTO(content=result)
+        return SummarizeResultDTO(summary=summary)

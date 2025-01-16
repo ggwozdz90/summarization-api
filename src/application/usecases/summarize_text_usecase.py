@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Any, Dict
 
 from fastapi import Depends
 
@@ -20,12 +20,16 @@ class SummarizeTextUseCase:
 
     async def execute(
         self,
-        text: str,
+        text_to_summarize: str,
+        generation_parameters: Dict[str, Any],
     ) -> str:
-        self.logger.info(f"Executing summarization for text '{text}'")
+        self.logger.info(f"Executing summarization for text '{text_to_summarize}'")
 
-        summarization_result: str = self.summarization_service.summarize_text(text)
+        summary: str = self.summarization_service.summarize_text(
+            text_to_summarize,
+            generation_parameters,
+        )
 
         self.logger.info("Returning summarization result")
 
-        return summarization_result
+        return summary
