@@ -45,15 +45,15 @@ def test_summarize_text_success(
     mock_summarization_model_repository: SummarizationModelRepository,
 ) -> None:
     # Given
-    text = "Hello World"
+    text_to_summarize = "Hello World"
     mock_summarization_model_repository.summarize.return_value = "Hello"
 
     # When
-    result = summarization_service.summarize_text(text)
+    result = summarization_service.summarize_text(text_to_summarize, {})
 
     # Then
     assert result == "Hello"
-    mock_summarization_model_repository.summarize.assert_called_once_with(text)
+    mock_summarization_model_repository.summarize.assert_called_once_with(text_to_summarize, {})
 
 
 def test_summarize_text_exception(
@@ -61,9 +61,9 @@ def test_summarize_text_exception(
     mock_summarization_model_repository: SummarizationModelRepository,
 ) -> None:
     # Given
-    text = "Hello World"
+    text_to_summarize = "Hello World"
     mock_summarization_model_repository.summarize.side_effect = Exception("Summarization error")
 
     # When / Then
     with pytest.raises(Exception, match="Summarization error"):
-        summarization_service.summarize_text(text)
+        summarization_service.summarize_text(text_to_summarize, {})

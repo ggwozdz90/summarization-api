@@ -60,7 +60,7 @@ def test_summarize_sends_correct_command(bart_worker: BartLargeCnnSummarizationW
 
         # Given
         bart_worker.start()
-        text = "Hello, world!"
+        text_to_summarize = "Hello, world!"
 
         # When
         with (
@@ -71,19 +71,19 @@ def test_summarize_sends_correct_command(bart_worker: BartLargeCnnSummarizationW
                 return_value="Hello",
             ),
         ):
-            bart_worker.summarize(text)
+            bart_worker.summarize(text_to_summarize, {})
 
             # Then
-            mock_send.assert_called_once_with(("summarize", (text)))
+            mock_send.assert_called_once_with(("summarize", (text_to_summarize, {})))
 
 
 def test_summarize_raises_error_if_worker_not_running(bart_worker: BartLargeCnnSummarizationWorker) -> None:
     # Given
-    text = "Hello, world!"
+    text_to_summarize = "Hello, world!"
 
     # When / Then
     with pytest.raises(RuntimeError, match="Worker process is not running"):
-        bart_worker.summarize(text)
+        bart_worker.summarize(text_to_summarize, {})
 
 
 def test_initialize_shared_object(bart_config: BartLargeCnnSummarizationConfig, mock_logger: Logger) -> None:
@@ -142,7 +142,7 @@ def test_handle_command_summarize(
         # When
         bart_worker.handle_command(
             command="summarize",
-            args=("Hello, world!"),
+            args=("Hello, world!", {}),
             shared_object=(mock_model, mock_tokenizer),
             config=bart_config,
             pipe=pipe,
@@ -184,7 +184,7 @@ def test_handle_command_summarize_error(
         # When
         bart_worker.handle_command(
             command="summarize",
-            args=("Hello, world!"),
+            args=("Hello, world!", {}),
             shared_object=(mock_model, mock_tokenizer),
             config=bart_config,
             pipe=pipe,

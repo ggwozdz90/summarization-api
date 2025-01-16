@@ -3,7 +3,7 @@ import multiprocessing.connection
 import multiprocessing.synchronize
 from dataclasses import dataclass
 from multiprocessing.sharedctypes import Synchronized
-from typing import Tuple
+from typing import Any, Dict, Tuple
 
 from transformers import AutoTokenizer, BartForConditionalGeneration
 
@@ -21,7 +21,7 @@ class BartLargeCnnSummarizationConfig:
 
 class BartLargeCnnSummarizationWorker(
     BaseWorker[  # type: ignore
-        str,
+        Tuple[str, Dict[str, Any]],
         str,
         BartLargeCnnSummarizationConfig,
         Tuple[BartForConditionalGeneration, AutoTokenizer],
@@ -29,12 +29,21 @@ class BartLargeCnnSummarizationWorker(
 ):
     def summarize(
         self,
-        text: str,
+        text_to_summarize: str,
+        generation_parameters: Dict[str, Any],
     ) -> str:
         if not self.is_alive():
             raise WorkerNotRunningError()
 
-        self._pipe_parent.send(("summarize", (text)))
+        self._pipe_parent.send(
+            (
+                "summarize",
+                (
+                    text_to_summarize,
+                    generation_parameters,
+                ),
+            ),
+        )
         result = self._pipe_parent.recv()
 
         if isinstance(result, Exception):
@@ -59,7 +68,7 @@ class BartLargeCnnSummarizationWorker(
     def handle_command(
         self,
         command: str,
-        args: str,
+        args: Tuple[str, Dict[str, Any]],
         shared_object: Tuple[BartForConditionalGeneration, AutoTokenizer],
         config: BartLargeCnnSummarizationConfig,
         pipe: multiprocessing.connection.Connection,
@@ -71,12 +80,12 @@ class BartLargeCnnSummarizationWorker(
                 with processing_lock:
                     is_processing.value = True
 
-                text = args
+                text_to_summarize, generation_parameters = args
                 model, tokenizer = shared_object
 
-                inputs = tokenizer([text], max_length=1024, return_tensors="pt").to(config.device)
+                inputs = tokenizer([text_to_summarize], max_length=1024, return_tensors="pt").to(config.device)
 
-                summary_ids = model.generate(inputs["input_ids"], num_beams=2)
+                summary_ids = model.generate(inputs["input_ids"], **generation_parameters)
 
                 output = tokenizer.batch_decode(
                     summary_ids,

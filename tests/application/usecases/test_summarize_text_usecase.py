@@ -45,8 +45,8 @@ async def test_execute_success(
     mock_summarization_service.summarize_text = Mock(return_value="result")
 
     # When
-    result = await use_case.execute("Hello")
+    result = await use_case.execute("Hello", {})
 
     # Then
     assert result == "result"
-    mock_summarization_service.summarize_text.assert_called_once_with("Hello")
+    mock_summarization_service.summarize_text.assert_called_once_with("Hello", {})

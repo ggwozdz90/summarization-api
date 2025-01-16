@@ -35,7 +35,7 @@ def test_summarize_success(
     response = client.post(
         "/summarize",
         json={
-            "text": (
+            "text_to_summarize": (
                 "Photosynthesis is the process by which green plants and some other organisms "
                 "use sunlight to synthesize foods with the help of chlorophyll."
             ),
@@ -45,7 +45,7 @@ def test_summarize_success(
     # Then
     assert response.status_code == 200
     assert response.json() == {
-        "content": "summarize_result",
+        "summary": "summarize_result",
     }
     mock_summarize_text_usecase.execute.assert_awaited_once()
 

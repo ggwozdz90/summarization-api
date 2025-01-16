@@ -89,18 +89,27 @@ Choose your preferred distribution:
 - Request:
 
     ```bash
-    curl -X POST "http://localhost:8000/summarize" \
-        -H "Content-Type: application/json" \
-        -d '{"text": "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll."}'
+    curl -X 'POST' \
+      'http://127.0.0.1:8000/summarize' \
+      -H 'accept: application/json' \
+      -H 'Content-Type: application/json' \
+      -d '{
+      "text_to_summarize": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington     Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.",
+      "generation_parameters": { "num_beams": 3, "max_length": 100, "early_stopping": true }
+    }'
     ```
 
 - Response:
 
     ```json
     {
-      "content": "Photosynthesis is how plants use sunlight to make food."
+      "summary": "The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building. Its base is square, measuring 125 metres (410 ft) on each side. It is the second tallest free-standing structure in France after the Millau Viaduct."
     }
     ```
+
+#### Generation Parameters
+
+The `generation_parameters` field in the request body allows you to specify the parameters which are described in the [Hugging Face Transformers documentation](https://huggingface.co/transformers/v2.11.0/model_doc/bart.html#transformers.BartForConditionalGeneration.generate):
 
 ### Health Check
 
@@ -148,6 +157,7 @@ Developer guide is available in [docs/DEVELOPER.md](DEVELOPER.md).
     - [Using Windows Executable](#using-windows-executable)
   - [API Features](#api-features)
     - [Summarize Text](#summarize-text)
+      - [Generation Parameters](#generation-parameters)
     - [Health Check](#health-check)
   - [Configuration](#configuration)
   - [Developer Guide](#developer-guide)

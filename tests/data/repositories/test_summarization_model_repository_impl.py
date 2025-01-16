@@ -84,12 +84,12 @@ def test_summarize_success(
     mock_worker.summarize.return_value = "text"
 
     # When
-    result = summarize_model_repository_impl.summarize("text to summarize")
+    result = summarize_model_repository_impl.summarize("text to summarize", {})
 
     # Then
     assert result == "text"
     mock_worker.start.assert_called_once()
-    mock_worker.summarize.assert_called_once_with("text to summarize")
+    mock_worker.summarize.assert_called_once_with("text to summarize", {})
     mock_timer.start.assert_called_once_with(60, summarize_model_repository_impl._check_idle_timeout)
 
 
